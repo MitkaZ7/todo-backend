@@ -1,24 +1,8 @@
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
+import User from '../models/user.js';
 import UserService from '../service/UserService.js'
-
-
-
-// const AuthError = require('../errors/AuthError');
-// const NotFoundError = require('../errors/NotFoundError');
-// const BadReqError = require('../errors/BadReqError');
-// const ExistUserError = require('../errors/ExistUserError');
-
-
-// module.exports.getUsers = (req, res, next) => {
-//   User.find({})
-//     .then((users) => {
-//       res.status(200).send(users);
-//     })
-//     .catch(next);
-// };
 
 // module.exports.getUser = (req, res, next) => {
 //   User.findById(req.params.userId).then((user) => {
@@ -35,23 +19,6 @@ import UserService from '../service/UserService.js'
 //     });
 // };
 
-// module.exports.createUser = (req, res, next) => {
-//   const { name, about, avatar, email } = req.body;
-//   User.findOne({ email }).then((user) => {
-//     if (user) {
-//       throw new ExistUserError('Пользователь с данным email уже cуществует');
-//     }
-//     bcrypt.hash(req.body.password, 10).then((hash) => User.create({ name, about, avatar, email, password: hash })
-//       .then(() => res.status(200).send({ message: 'Вы успешно зарегистрировались!' }))
-//       .catch((err) => {
-//         if (err.name === 'ValidationError') {
-//           next(new BadReqError('Передан невалидные данные'));
-//         }
-//         next(err);
-//       }));
-//   })
-//     .catch(next);
-// };
 
 // module.exports.updateUser = (req, res, next) => {
 //   const userId = req.user._id;
@@ -72,27 +39,20 @@ import UserService from '../service/UserService.js'
 
 
 class UserController {
-  async getUsers(req, res) {
-
+  async getUser(req, res) {
     try {
-
+      const user = await UserService.getUser(req.params.id)
+      return res.json(user);
     } catch (error) {
-
-    }
-  }
-  async getOneUser(req, res) {
-    try {
-
-    } catch (error) {
-
+      res.status(500).json(error)
     }
   }
   async getUsers(req, res) {
     try {
-      const users = await User.find();
-      res.json(users)
+      const users = await UserService.getUsers();
+      return res.json(users)
     } catch (error) {
-
+      res.status(500).json(error)
     }
   }
 

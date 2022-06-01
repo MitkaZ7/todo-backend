@@ -1,9 +1,9 @@
 
-import Task from '../models/Task.js';
+import Task from '../models/task.js';
 
 class TaskService {
-  async create(task) {
-    const createdTask = await Task.create(task);
+  async create({task}) {
+    const createdTask = await Task.create({task});
         return createdTask;
 }
 

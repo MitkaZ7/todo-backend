@@ -3,10 +3,10 @@ import TasksController from '../controllers/TaskController.js'
 
 const tasksRouter = new Router()
 
-tasksRouter.post('/tasks', TasksController.create);
-tasksRouter.get('/tasks', TasksController.getAll);
-tasksRouter.get('/tasks/:id', TasksController.getOne);
-tasksRouter.put('/tasks', TasksController.update);
-tasksRouter.delete('/tasks/:id', TasksController.delete);
+tasksRouter.post('/', TasksController.create);
+tasksRouter.get('/', TasksController.getAll);
+tasksRouter.get('/:id', TasksController.getOne);
+tasksRouter.put('/', TasksController.update);
+tasksRouter.delete('/:id', TasksController.delete);
 
 export default tasksRouter;

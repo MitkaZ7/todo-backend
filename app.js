@@ -3,16 +3,24 @@ import express from 'express';
 import mongoose from 'mongoose';
 import tasksRouter from './routes/tasksRouter.js';
 import usersRouter from './routes/usersRouter.js';
-// import authRouter from './routes/authRouter.js';
+import authorization from './middlewares/auth.js';
+import UserController from './controllers/UserController.js';
 
 const app = express();
-
-
 app.use(express.json());
-app.use('/api', tasksRouter);
-// app.use('/auth', authRouter);
+
+app.post('/signin', UserController.login);
+app.post('/signup', UserController.registration);
+
+app.use(authorization);
 
 app.use('/users', usersRouter);
+app.use('/tasks', tasksRouter);
+// app.use('/', ()=>{
+//   console.log('PAGE NOT FOUND')
+// })
+
+
 
 
 async function startApp() {

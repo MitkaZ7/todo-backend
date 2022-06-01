@@ -1,27 +1,18 @@
-import User from '../models/User.js'
+import User from '../models/user.js'
 
 class UserService {
-
-  async getUsers() {
-    const usersArray = await User.find();
-    return usersArray;
-  }
-
-  async getOneUser() {
-    try {
-
-    } catch (error) {
-
+  async getUser(id) {
+    if (!id) {
+      throw new Error('Пользователь не найден или не существует');
     }
+    const user = await User.findById(id);
+    return user;
   }
   async getUsers() {
-    try {
-
-    } catch (error) {
-
-    }
+      const users = await User.find();
+      return users;
   }
-  async registrate() {
+  async registration() {
     try {
 
     } catch (error) {

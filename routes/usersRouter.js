@@ -1,13 +1,14 @@
 import Router from 'express'
 import UserController from '../controllers/UserController.js'
-const usersRouter = new Router();
-import auth from '../middlewares/auth.js'
-usersRouter.get('/', auth, UserController.getUsers);
-usersRouter.get('/me', UserController.getOneUser);
-usersRouter.get('/:id', UserController.getOneUser);
-usersRouter.post('/registration', UserController.registration);
-usersRouter.post('/login', UserController.login);
+import authorization from '../middlewares/auth.js'
 
+const usersRouter = new Router();
+
+usersRouter.get('/', authorization, UserController.getUsers);
+usersRouter.get('/me', UserController.getUser);
+usersRouter.get('/:id', UserController.getUser);
+// usersRouter.post('/registration', UserController.registration);
+// usersRouter.post('/login', UserController.login);
 usersRouter.patch('/me', UserController.updateUser);
 
 
