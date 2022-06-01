@@ -1,4 +1,3 @@
-import TaskSchema from '../models/Task.js'
 import TaskService from '../service/TaskService.js';
 
 class TaskController {
