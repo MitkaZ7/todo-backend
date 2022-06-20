@@ -2,11 +2,12 @@ import mongoose from 'mongoose'
 const Task = new mongoose.Schema({
     owner: {
         // type: mongoose.Schema.Types.ObjectId,
+
+        // ref: 'user',
         type: String,
-        ref: 'user',
         required: true
     },
-    taskText: {
+    text: {
         type: String,
         required: true
     },
@@ -14,6 +15,11 @@ const Task = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    date: {
+      type: Date,
+      required: true,
+      default: Date.now()
     }
 })
 
