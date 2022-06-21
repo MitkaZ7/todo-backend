@@ -3,6 +3,7 @@ import Role from '../models/Role.js'
 import AuthError from '../errors/AuthError.js'
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+
 const saltRounds = 5;
 
 const generateAccessToken = (id, roles) => {
@@ -10,7 +11,7 @@ const generateAccessToken = (id, roles) => {
     id,
     roles
   }
-  return jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: "24h"});
+  return jwt.sign(payload, 'key', { expiresIn: "3d"});
 }
 class UserController {
   async registration(req, res) {
@@ -40,7 +41,7 @@ class UserController {
       const user = await User.findOne({ email: email});
       const matchedPass = await bcrypt.compare(password, user.password, async function(res,err){
         if(err) {
-          console.log(err)
+           throw new AuthError('Неверный логин или пароль');
         }
       })
       const userFound = User.findOne({
@@ -60,7 +61,8 @@ class UserController {
   }
   async getUsers(req, res) {
     try {
-
+      const users = await User.find()
+      res.status(200).json(users)
     } catch (e) {
 
     }
