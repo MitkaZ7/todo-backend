@@ -11,7 +11,7 @@ export default function authorization(req, res, next) {
     }
     const decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
     req.user = decodedData;
-    console.log(decodedData);
+
     next()
   } catch (error) {
     console.log(error)
