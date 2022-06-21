@@ -11,7 +11,7 @@ const generateAccessToken = (id, roles) => {
     id,
     roles
   }
-  return jwt.sign(payload, 'key', { expiresIn: "3d"});
+  return jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: "3d"});
 }
 class UserController {
   async registration(req, res) {
