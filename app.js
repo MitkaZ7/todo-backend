@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import tasksRouter from './routes/tasksRouter.js';
 import usersRouter from './routes/usersRouter.js';
 
+import errorsLogger from './middlewares/errorsLogger.js';
+
 const app = express();
 
 app.use(express.json());
@@ -31,7 +33,7 @@ app.use((req, res, next) => {
 
 app.use('/api', usersRouter);
 app.use('/api', tasksRouter);
-
+app.use(errorsLogger);
 
 // app.use((err, req, res, next) => {
 //   const { statusCode = 500, message } = err;
