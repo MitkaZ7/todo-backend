@@ -1,10 +1,8 @@
 export default class s extends Error {
-  constructor(status,message) {
+  constructor(message) {
     super(message);
-    this.status = status;
-  }
-  static BadRequestError() {
-    return new AuthError(400, 'Пользователь с таким email уже зарегистрирован')
+    this.statusCode = 400;
+    this.message = message;
   }
 }
 

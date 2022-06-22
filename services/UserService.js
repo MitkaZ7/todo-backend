@@ -2,8 +2,8 @@ import User from '../models/User.js';
 import MailService from  './MailService.js'
 import TokenService from './TokenService.js';
 import UserDto from '../dtos/UserDto.js'
-
 import AuthError from '../errors/AuthError.js'
+import BadReqError from '../errors/BadReqError.js'
 import ExistUserError from '../errors/ExistUserError.js'
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from 'uuid';
@@ -47,15 +47,35 @@ class UserService {
     if (!validPassword) {
       throw new AuthError('Неверный логин или пароль');
     }
-     const userDto = new UserDto(user);
+    const userDto = new UserDto(user);
     const tokens = await TokenService.generateTokens({...userDto});
-    // const tokens = await TokenService.generateTokens({user});
     await TokenService.saveToken(userDto.id, tokens.refreshToken);
 
     return { ...tokens, user: userDto}
 
 
   }
+  async refresh(refreshToken) {
+    if (!refreshToken) {
+      throw new AuthError('Пользователь не авторизован')
+    }
+    const userData = await TokenService.validateRefreshToken(refreshToken);
+    const tokenFromDb = await TokenService.findToken(refreshToken);
+    if (!userData || !tokenFromDb) {
+      throw new AuthError('Пользователь не авторизован');
+    }
+
+    const user = await User.findById(userData.id);
+    const userDto = new UserDto(user);
+    const tokens = await TokenService.generateTokens({ ...userDto });
+    await TokenService.saveToken(userDto.id, tokens.refreshToken);
+
+    return { ...tokens, user: userDto }
+
+  }
+
+
+
   async logout(refreshToken) {
     const token = await TokenService.removeToken(refreshToken);
     return token;
