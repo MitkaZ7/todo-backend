@@ -6,12 +6,13 @@ import cookieParser from 'cookie-parser';
 import tasksRouter from './routes/tasksRouter.js';
 import usersRouter from './routes/usersRouter.js';
 
-import errorsLogger from './middlewares/errorsLogger.js';
+import { requestLogger, errorLogger } from './middlewares/Logger.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+// app.use(requestLogger);
 app.use(cors());
 const allowedCors = [
   'http://localhost:8080'
@@ -33,7 +34,7 @@ app.use((req, res, next) => {
 
 app.use('/api', usersRouter);
 app.use('/api', tasksRouter);
-app.use(errorsLogger);
+app.use(errorLogger);
 
 // app.use((err, req, res, next) => {
 //   const { statusCode = 500, message } = err;
