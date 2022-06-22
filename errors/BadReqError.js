@@ -1,8 +1,11 @@
-class BadReqError extends Error {
-  constructor(message) {
+export default class s extends Error {
+  constructor(status,message) {
     super(message);
-    this.statusCode = 400;
+    this.status = status;
+  }
+  static BadRequestError() {
+    return new AuthError(400, 'Пользователь с таким email уже зарегистрирован')
   }
 }
 
-module.exports = BadReqError;
+

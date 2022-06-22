@@ -13,15 +13,15 @@ class UserController {
       const userData = await UserService.registration(email, password);
       res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 1000, httpOnly: true })
       return res.json(userData);
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      next(e);
     }
   }
   async login(req, res, next) {
     try {
 
     } catch (e) {
-
+      next(e);
     }
     // try {
     //   const {email, password} = req.body;
@@ -50,21 +50,23 @@ class UserController {
     try {
 
     } catch (e) {
-
+      next(e);
     }
   }
   async refresh(req, res, next) {
     try {
 
     } catch (e) {
-
+      next(e);
     }
   }
   async activate(req, res, next) {
     try {
-
+      const activationLink = req.params.link;
+      await UserService.activate(activationLink);
+      return res.redirect(process.env.CLIENT_URL);
     } catch (e) {
-
+      next(e);
     }
   }
   async getUsers(req, res, next) {
@@ -72,7 +74,7 @@ class UserController {
       const users = await User.find()
       res.status(200).json(users)
     } catch (e) {
-
+      next(e);
     }
   }
 }
