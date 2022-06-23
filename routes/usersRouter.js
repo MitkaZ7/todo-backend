@@ -14,7 +14,7 @@ usersRouter.post('/logout', UserController.logout);
 usersRouter.get('/activate/:link', UserController.activate);
 usersRouter.get('/refresh', UserController.refresh);
 // usersRouter.get('/users', roleCheker(['ADMINISTRATOR', 'USER']), UserController.getUsers);
-usersRouter.get('/users', UserController.getUsers);
+usersRouter.get('/users', authorization, UserController.getUsers);
 
 // usersRouter.patch('/me', UserController.updateUser);
 

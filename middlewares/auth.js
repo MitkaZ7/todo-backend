@@ -1,20 +1,30 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import AuthError from '../errors/AuthError.js';
+import TokenService from '../services/TokenService.js';
 export default function authorization(req, res, next) {
-  if(req.method === "OPTIONS") {
-    next();
-  }
+  // if(req.method === "OPTIONS") {
+  //   next();
+  // }
   try {
-    const token = req.headers.authorization.split(' ')[1];
-    if(!token){
-      res.status(403).json({ message: "Пользователь не авторизован" })
+    const authorizationHeader = req.headers.authorization;
+    if (!authorizationHeader) {
+      throw new AuthError('Пользователь не авторизован');
     }
-    const decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-    req.user = decodedData;
 
+    const accessToken = authorizationHeader.split(' ')[1];
+    if (!accessToken){
+      throw new AuthError('Пользователь не авторизован');
+    }
+    const userData = TokenService.validateAccessToken(accessToken);
+    if (!userData) {
+      throw new AuthError('Пользователь не авторизован');
+    }
+    req.user  = userData;
     next()
-  } catch (error) {
-    console.log(error)
-    res.status(403).json({ message:"Пользователь не авторизован"})
+  } catch (e) {
+    return next(new AuthError('Пользователь не авторизован'))
+    // console.log(error)
+    // res.status(403).json({ message:"Пользователь не авторизован"})
   }
 }
