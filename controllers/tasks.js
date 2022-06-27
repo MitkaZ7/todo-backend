@@ -5,7 +5,8 @@ class TasksController {
   async createTask(req, res) {
     try {
       const task = await TaskService.createTask(req.body)
-      res.status(200).json({ task })
+      console.log(req.body)
+      res.status(200).send(task);
     } catch (error) {
       res.status(500).json(error);
   }
@@ -13,6 +14,7 @@ class TasksController {
   async getAllTasks(req, res) {
     try {
       const tasks = await TaskService.getAllTasks()
+
       return res.json(tasks);
     } catch (error) {
       res.status(500).json(error);

@@ -15,7 +15,7 @@ app.use(cookieParser());
 // app.use(requestLogger);
 app.use(cors());
 const allowedCors = [
-  'http://localhost:8080'
+  'http://localhost:3000'
 ];
 const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
 
@@ -32,18 +32,9 @@ app.use((req, res, next) => {
 
 
 
-app.use('/api', usersRouter);
-app.use('/api', tasksRouter);
+app.use('/', usersRouter);
+app.use('/', tasksRouter);
 app.use(errorLogger);
-
-// app.use((err, req, res, next) => {
-//   const { statusCode = 500, message } = err;
-//   res.status(statusCode).send({
-//     message: statusCode === 500 ? 'Ошибка сервера' : message
-//   });
-//   next();
-// })
-
 
 
 async function startApp() {

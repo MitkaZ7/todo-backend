@@ -5,7 +5,7 @@ const Task = new mongoose.Schema({
 
         // ref: 'user',
         type: String,
-        required: true
+        required: false
     },
     text: {
         type: String,
