@@ -40,7 +40,7 @@ class TasksController {
   async deleteTask(req, res) {
     try {
         const task = await TaskService.deleteTask(req.params.id);
-      return res.json(task);
+      return res.send(task);
     } catch (error) {
       res.status(500).json(error);
     }

@@ -17,7 +17,7 @@ app.use(cors());
 const allowedCors = [
   'http://localhost:3000'
 ];
-const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
+const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', allowedCors);
