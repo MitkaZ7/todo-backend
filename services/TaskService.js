@@ -24,6 +24,7 @@ class TaskService {
         throw new Error('ID not provided')
       }
       const updatedTask = await Task.findByIdAndUpdate(task._id, task, { new: true });
+      console.log(updatedTask)
       return updatedTask;
 
   }

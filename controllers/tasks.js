@@ -32,6 +32,7 @@ class TasksController {
     try {
 
       const updatedTask = await TaskService.updateTask(req.body);
+      // console.log(updatedTask);
       return res.json(updatedTask);
     } catch (error) {
       res.status(500).json(error);
