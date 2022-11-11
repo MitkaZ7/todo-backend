@@ -2,8 +2,6 @@ import User from '../models/User.js'
 import Role from '../models/Role.js'
 import AuthError from '../errors/AuthError.js'
 import UserService from '../services/UserService.js'
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
 
 
 class UserController {
@@ -11,7 +9,7 @@ class UserController {
     try {
       const { email, password, isActivated } = req.body;
       const userData = await UserService.registration(email, password);
-      res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 1000, httpOnly: true })
+      res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 1000, httpOnly: true });
       console.log(userData);
       return res.json(userData);
     } catch (e) {
